@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(135deg, #ffe4ec, #fff7f9);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ec4899;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff5f8;
+}
+
+.floating-heart {
+  position: fixed;
+  bottom: -60px;
+  color: rgba(236, 72, 153, 0.18);
+  pointer-events: none;
+  z-index: 0;
+  animation-name: floatHeart;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
