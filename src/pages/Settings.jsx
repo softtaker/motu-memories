@@ -10,6 +10,7 @@ import {
   FaPlay,
   FaPause,
   FaPalette,
+  FaLock,
 } from "react-icons/fa";
 
 import PageWrapper from "../components/PageWrapper";
@@ -26,6 +27,12 @@ export default function Settings() {
     birthday: "",
     letter: "",
     theme: "pink",
+
+    // NEW
+    secretQuestion:
+      "What nickname do I always call you?",
+    secretAnswer: "Motu",
+    rememberLogin: true,
   });
 
   const [saved, setSaved] = useState(false);
@@ -38,10 +45,11 @@ export default function Settings() {
 
       if (data) {
         const parsed = JSON.parse(data);
-        setSettings({
-          ...settings,
+
+        setSettings((prev) => ({
+          ...prev,
           ...parsed,
-        });
+        }));
       }
     } catch (err) {
       console.error(err);
@@ -108,10 +116,21 @@ export default function Settings() {
         JSON.stringify(settings)
       );
 
+      // For LockScreen compatibility
+      localStorage.setItem(
+        "motuQuestion",
+        settings.secretQuestion
+      );
+
+      localStorage.setItem(
+        "motuAnswer",
+        settings.secretAnswer
+      );
+
       setSaved(true);
 
       setTimeout(() => {
-                setSaved(false);
+        setSaved(false);
       }, 2500);
     } catch (err) {
       console.error(err);
@@ -256,7 +275,68 @@ export default function Settings() {
               <option value="purple">Purple</option>
               <option value="gold">Golden</option>
             </select>
-                        <label className="font-semibold flex items-center gap-2 mb-3">
+
+            {/* PART 2 STARTS HERE */}
+                        <GlassCard
+              hover={false}
+              className="p-6 mb-8 border-2 border-pink-200"
+            >
+              <h3 className="text-2xl font-bold text-pink-600 flex items-center gap-2 mb-6">
+                <FaLock />
+                App Security
+              </h3>
+
+              <label className="font-semibold mb-2 block">
+                Secret Question
+              </label>
+
+              <input
+                value={settings.secretQuestion}
+                onChange={(e) =>
+                  update(
+                    "secretQuestion",
+                    e.target.value
+                  )
+                }
+                className="w-full rounded-2xl border border-pink-200 bg-white/70 p-4 mb-6 outline-none focus:ring-2 focus:ring-pink-300"
+                placeholder="What nickname do I always call you?"
+              />
+
+              <label className="font-semibold mb-2 block">
+                Secret Answer
+              </label>
+
+              <input
+                value={settings.secretAnswer}
+                onChange={(e) =>
+                  update(
+                    "secretAnswer",
+                    e.target.value
+                  )
+                }
+                className="w-full rounded-2xl border border-pink-200 bg-white/70 p-4 mb-6 outline-none focus:ring-2 focus:ring-pink-300"
+                placeholder="Motu"
+              />
+
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.rememberLogin}
+                  onChange={(e) =>
+                    update(
+                      "rememberLogin",
+                      e.target.checked
+                    )
+                  }
+                />
+
+                <span>
+                  Remember login for 30 days
+                </span>
+              </label>
+            </GlassCard>
+
+            <label className="font-semibold flex items-center gap-2 mb-3">
               <FaHeart />
               Love Letter ❤️
             </label>
