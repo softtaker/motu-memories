@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Heart, Lock } from "lucide-react";
+import { FaHeart, FaLock } from "react-icons/fa";
 
 import { useAuth } from "../context/AuthContext";
 import PageWrapper from "../components/PageWrapper";
@@ -26,7 +26,7 @@ export default function LockScreen() {
   )
     .trim()
     .toLowerCase();
-                                                    
+
   const remember =
     savedSettings.rememberLogin ?? true;
 
@@ -48,7 +48,7 @@ export default function LockScreen() {
 
   return (
     <PageWrapper className="flex items-center justify-center min-h-screen p-6">
-
+      {/* Floating Hearts */}
       <motion.div
         className="absolute top-12 left-12 text-pink-400"
         animate={{
@@ -60,7 +60,7 @@ export default function LockScreen() {
           duration: 3,
         }}
       >
-        <Heart size={28} fill="currentColor" />
+        <FaHeart size={28} />
       </motion.div>
 
       <motion.div
@@ -74,7 +74,7 @@ export default function LockScreen() {
           duration: 4,
         }}
       >
-        <Heart size={24} fill="currentColor" />
+        <FaHeart size={24} />
       </motion.div>
 
       <motion.div
@@ -87,7 +87,6 @@ export default function LockScreen() {
         }
       >
         <GlassCard className="max-w-md w-full text-center p-8">
-
           <motion.div
             animate={{
               scale: [1, 1.08, 1],
@@ -98,7 +97,7 @@ export default function LockScreen() {
             }}
             className="flex justify-center mb-5"
           >
-            <Lock
+            <FaLock
               size={56}
               className="text-pink-500"
             />
@@ -128,7 +127,9 @@ export default function LockScreen() {
               setAnswer(e.target.value)
             }
             onKeyDown={(e) => {
-              if (e.key === "Enter") unlock();
+              if (e.key === "Enter") {
+                unlock();
+              }
             }}
             placeholder="Type your answer..."
             className="w-full rounded-xl border border-pink-300 bg-white/80 px-4 py-3 outline-none focus:ring-2 focus:ring-pink-400"
@@ -136,12 +137,8 @@ export default function LockScreen() {
 
           {error && (
             <motion.p
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               className="text-red-500 mt-4"
             >
               🥺 Oops... Only my Motu knows the answer ❤️
@@ -158,7 +155,6 @@ export default function LockScreen() {
           </div>
         </GlassCard>
       </motion.div>
-
     </PageWrapper>
   );
 }
